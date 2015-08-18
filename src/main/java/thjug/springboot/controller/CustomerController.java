@@ -48,8 +48,7 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "/customer", method = PUT)
-    public String update(@RequestBody final String c) throws IOException {
-        final Customer customer = mapper.readValue(c, Customer.class);
+    public String update(@RequestBody final Customer customer) throws IOException {
         return "success, id:" + customer.getId();
     }
 

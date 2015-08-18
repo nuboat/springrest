@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -67,8 +68,9 @@ public class CustomerControllerTest {
     public void testUpdate() throws Exception {
         final String id = "1";
         final MockHttpServletRequestBuilder builder =
-            MockMvcRequestBuilders.put("/customer").content(
-                "{\"id\":1,\"firstName\":\"Coco\",\"lastName\":\"Crunch\"}");
+            MockMvcRequestBuilders.put("/customer")
+                .content("{\"id\":1,\"firstName\":\"Coco\",\"lastName\":\"Crunch\"}")
+                .contentType(MediaType.APPLICATION_JSON);
 
         final ResultActions result = mvc.perform(builder)
                 .andExpect(status().isOk())
