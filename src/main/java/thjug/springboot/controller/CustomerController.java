@@ -20,9 +20,9 @@ import thjug.springboot.entity.Customer;
 
 /**
  * <p>
- * If you annotate a method with @ResponseBody,
- * spring will try to convert its return value and write it to the http response automatically.
- * If you annotate a methods parameter with @RequestBody,
+ * If you annotate a method with @ResponseBody, spring will try to convert its
+ * return value and write it to the http response automatically. If you annotate
+ * a methods parameter with @RequestBody,
  *
  * @author peerapat
  */
@@ -33,31 +33,75 @@ public class CustomerController {
 
     final static ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * <p>POST /customer
+     *  "firstname" : {firstname}
+     *  "lastname" : {lastname}
+     *
+     * @param firstname
+     * @param lastname
+     * @return String
+     *
+     */
     @ResponseBody
     @RequestMapping(value = "/customer", method = POST)
-    public String create(@RequestParam(value="firstname") final String firstname,
-                         @RequestParam(value="lastname") final String lastname) {
+    public String create(@RequestParam(value = "firstname") final String firstname,
+            @RequestParam(value = "lastname") final String lastname) {
         return "success, id:1";
     }
 
+    /**
+     * <p>GET /customer/{id}
+     *
+     * @param id: Long
+     * @return Customer
+     *
+     */
     @ResponseBody
     @RequestMapping(value = "/customer/{id}", method = GET)
-    public Customer read(@PathVariable(value="id") final Long id) {
+    public Customer read(@PathVariable(value = "id") final Long id) {
         return new Customer(id, "Coco", "Crunch");
     }
 
+    /**
+     * <p>PUT /customer
+     *  RAW: "{"id":1, "firstName":"Coco", "lastName":"Crunch"}"
+     *
+     * @param customer: Json format
+     * @return String
+     * @throws java.io.IOException
+     *
+     */
     @ResponseBody
     @RequestMapping(value = "/customer", method = PUT)
     public String update(@RequestBody final Customer customer) throws IOException {
         return "success, id:" + customer.getId();
     }
 
+    /**
+     * <p>DELETE /customer
+     *  "id" : {id}
+     *
+     * @param id
+     * @return String
+     *
+     */
     @ResponseBody
     @RequestMapping(value = "/customer", method = DELETE)
-    public String delete(@RequestParam(value="id") final Long id) {
+    public String delete(@RequestParam(value = "id") final Long id) {
         return "success, id:" + id;
     }
 
+    /**
+     * <p>POST /customer/upload
+     *  "id" : {id}
+     *  "file" : {file}
+     *
+     * @param id
+     * @param file
+     * @return String
+     *
+     */
     @ResponseBody
     @RequestMapping(value = "/customer/upload", method = POST)
     public String upload(@RequestParam("id") final String id,
@@ -77,7 +121,6 @@ public class CustomerController {
         } catch (final Exception e) {
             return "error, " + e.getMessage();
         }
-
     }
 
 }
