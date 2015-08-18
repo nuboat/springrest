@@ -66,11 +66,9 @@ public class CustomerControllerTest {
     @Test
     public void testUpdate() throws Exception {
         final String id = "1";
-        final MockHttpServletRequestBuilder builder
-                = MockMvcRequestBuilders.put("/customer")
-                .param("id", id)
-                .param("firstname", "Coco")
-                .param("lastname", "Crunch");
+        final MockHttpServletRequestBuilder builder =
+            MockMvcRequestBuilders.put("/customer").content(
+                "{\"id\":1,\"firstName\":\"Coco\",\"lastName\":\"Crunch\"}");
 
         final ResultActions result = mvc.perform(builder)
                 .andExpect(status().isOk())

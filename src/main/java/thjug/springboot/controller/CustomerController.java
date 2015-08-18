@@ -1,10 +1,13 @@
 package thjug.springboot.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -26,6 +29,10 @@ import thjug.springboot.entity.Customer;
 @Controller
 public class CustomerController {
 
+    final static String PATH = "/Users/pasoktummarungsri/Desktop/";
+
+    final static ObjectMapper mapper = new ObjectMapper();
+
     @ResponseBody
     @RequestMapping(value = "/customer", method = POST)
     public String create(@RequestParam(value="firstname") final String firstname,
@@ -41,10 +48,9 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "/customer", method = PUT)
-    public String update(@RequestParam(value="id") final Long id,
-                         @RequestParam(value="firstname") final String firstname,
-                         @RequestParam(value="lastname") final String lastname) {
-        return "success, id:" + id;
+    public String update(@RequestBody final String c) throws IOException {
+        final Customer customer = mapper.readValue(c, Customer.class);
+        return "success, id:" + customer.getId();
     }
 
     @ResponseBody
@@ -64,11 +70,10 @@ public class CustomerController {
         try {
             final String name = file.getName();
             final byte[] bytes = file.getBytes();
-            final BufferedOutputStream stream = new BufferedOutputStream(
-                new FileOutputStream(
-                    new File("/Users/pasoktummarungsri/Desktop/", name)));
-            stream.write(bytes);
-            stream.close();
+            try (BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(new File(PATH, name)))) {
+                stream.write(bytes);
+            }
             return "success, id:" + id + " name:" + name;
         } catch (final Exception e) {
             return "error, " + e.getMessage();
