@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import thjug.springboot.entity.Customer;
 
@@ -26,7 +25,7 @@ import thjug.springboot.entity.Customer;
  *
  * @author peerapat
  */
-@Controller
+@RestController
 public class CustomerController {
 
     final static String PATH = "/Users/pasoktummarungsri/Desktop/";
@@ -43,7 +42,6 @@ public class CustomerController {
      * @return String
      *
      */
-    @ResponseBody
     @RequestMapping(value = "/customer", method = POST)
     public String create(@RequestParam(value = "firstname") final String firstname,
             @RequestParam(value = "lastname") final String lastname) {
@@ -57,7 +55,6 @@ public class CustomerController {
      * @return Customer
      *
      */
-    @ResponseBody
     @RequestMapping(value = "/customer/{id}", method = GET)
     public Customer read(@PathVariable(value = "id") final Long id) {
         return new Customer(id, "Coco", "Crunch");
@@ -72,7 +69,6 @@ public class CustomerController {
      * @throws java.io.IOException
      *
      */
-    @ResponseBody
     @RequestMapping(value = "/customer", method = PUT)
     public String update(@RequestBody final Customer customer) throws IOException {
         return "success, id:" + customer.getId();
@@ -86,7 +82,6 @@ public class CustomerController {
      * @return String
      *
      */
-    @ResponseBody
     @RequestMapping(value = "/customer", method = DELETE)
     public String delete(@RequestParam(value = "id") final Long id) {
         return "success, id:" + id;
@@ -102,7 +97,6 @@ public class CustomerController {
      * @return String
      *
      */
-    @ResponseBody
     @RequestMapping(value = "/customer/upload", method = POST)
     public String upload(@RequestParam("id") final String id,
             @RequestParam("file") final MultipartFile file) {
