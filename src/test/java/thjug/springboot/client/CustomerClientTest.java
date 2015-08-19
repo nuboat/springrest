@@ -16,9 +16,7 @@ public class CustomerClientTest {
     @Test
     public void testCreate() throws Exception {
         final CustomerClient client = new CustomerClient();
-        final Customer c = client.read(1L);
-
-        assert c.getId() == 1 : "Id should be 1";
+        client.create("John", "T");
     }
 
     @Test

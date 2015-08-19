@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>
  * If you annotate a method with @ResponseBody,
  * spring will try to convert its return value and write it to the http response automatically.
- * If you annotate a methods parameter with @RequestBody,
  *
  * @author peerapat
  */
