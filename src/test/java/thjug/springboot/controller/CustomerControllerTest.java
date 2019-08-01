@@ -1,12 +1,10 @@
 package thjug.springboot.controller;
 
-import java.io.FileInputStream;
 import lombok.extern.slf4j.Slf4j;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockServletContext;
@@ -18,22 +16,25 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.io.FileInputStream;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import thjug.springboot.Application;
 
 @Slf4j
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringBootApplication
 @ContextConfiguration(classes = MockServletContext.class)
 public class CustomerControllerTest {
 
     private MockMvc mvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mvc = MockMvcBuilders.standaloneSetup(new CustomerController()).build();
     }
 
@@ -95,11 +96,10 @@ public class CustomerControllerTest {
 
     @Test
     public void testUpload() throws Exception {
-        final String name = "starbucks.png";
-        final FileInputStream fis = new FileInputStream(
-                "/Users/pasoktummarungsri/Desktop/" + name);
+        final FileInputStream fis = new FileInputStream("./files/NB.jpg");
+
         final MockMultipartHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.fileUpload("/customer/upload")
+                MockMvcRequestBuilders.multipart("/customer/upload")
                     .file(new MockMultipartFile("file", fis));
         builder.param("id", "1");
 

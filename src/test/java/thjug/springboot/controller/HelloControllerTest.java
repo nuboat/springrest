@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,7 +21,7 @@ import thjug.springboot.Application;
 @Slf4j
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringBootApplication
 @ContextConfiguration(classes = MockServletContext.class)
 public class HelloControllerTest {
 

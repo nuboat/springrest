@@ -1,8 +1,10 @@
 package thjug.springboot.client;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import thjug.springboot.entity.Customer;
 
+@Ignore
 public class CustomerClientTest {
 
     @Test
